@@ -1,0 +1,1087 @@
+MariaDB [(none)]> create database kiosk;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]> exit
+Bye
+
+C:\xampp\mysql\bin>mysql -u root -p kiosk < kiosk.sql
+Enter password:
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 10
+Server version: 10.4.25-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use kiosk;
+Database changed
+MariaDB [kiosk]> show tables;
++-----------------+
+| Tables_in_kiosk |
++-----------------+
+| jabatan         |
+| kelab_persatuan |
+| pensyarah       |
+| program         |
+| rumah_sukan     |
+| sukan_permainan |
+| unit_uniform    |
+| yuran           |
+| yuran_bayar     |
++-----------------+
+9 rows in set (0.006 sec)
+
+MariaDB [kiosk]> select * from pensyarah;
++--------------+----------------+------------+------------+--------------------+-----------------+--------------------+----------------+
+| id_pensyarah | nama_pensyarah | id_program | id_jabatan | id_kelab_persatuan | id_unit_uniform | id_sukan_permainan | id_rumah_sukan |
++--------------+----------------+------------+------------+--------------------+-----------------+--------------------+----------------+
+|            1 | Suriyah        |          4 |          2 |               NULL |               1 |                  1 |              1 |
+|            2 | Mastura        |          4 |          2 |                  1 |               2 |               NULL |              2 |
+|            3 | Yussalina      |          4 |          2 |                  1 |               3 |               NULL |              3 |
+|            4 | Yuswadi        |          4 |          2 |               NULL |               4 |                  3 |              4 |
+|            5 | Farhah         |          3 |          1 |               NULL |               1 |                  2 |              1 |
+|            6 | Liew           |          3 |          1 |                  2 |               2 |               NULL |              2 |
+|            7 | Anizah         |          3 |          1 |                  3 |               3 |               NULL |              3 |
+|            8 | Huda           |          2 |          1 |               NULL |               4 |                  4 |              4 |
+|            9 | Faaizun        |          2 |          1 |               NULL |               1 |                  5 |              1 |
+|           10 | Nadrah         |          1 |          1 |               NULL |               2 |                  2 |              2 |
+|           11 | Suhaida        |          1 |          1 |                  3 |               3 |               NULL |              3 |
++--------------+----------------+------------+------------+--------------------+-----------------+--------------------+----------------+
+11 rows in set (0.003 sec)
+
+MariaDB [kiosk]> select * from yuran_bayar;
++-----------+--------------+----------+--------------+--------+
+| id_ybayar | id_pensyarah | id_yuran | tarikh_bayar | jumlah |
++-----------+--------------+----------+--------------+--------+
+|         1 |            1 |        1 | NULL         | 150.00 |
+|         2 |            1 |        2 | NULL         |  50.00 |
+|         3 |            2 |        1 | NULL         | 100.00 |
+|         4 |            2 |        2 | NULL         |  50.00 |
+|         5 |            3 |        1 | NULL         | 150.00 |
+|         6 |            3 |        2 | NULL         |  50.00 |
+|         7 |            5 |        1 | NULL         | 150.00 |
+|         8 |            5 |        2 | NULL         |  50.00 |
++-----------+--------------+----------+--------------+--------+
+8 rows in set (0.001 sec)
+
+MariaDB [kiosk]> select * from rumah_sukan;
++----------------+------------------+
+| id_rumah_sukan | nama_rumah_sukan |
++----------------+------------------+
+|              1 | alfa             |
+|              2 | beta             |
+|              3 | gamma            |
+|              4 | sigma            |
++----------------+------------------+
+4 rows in set (0.001 sec)
+
+MariaDB [kiosk]> select * from sukan_permainan;
+Empty set (0.001 sec)
+
+MariaDB [kiosk]> insert into sukan_permainan values
+    -> ('1','bola jaring'),
+    -> ('2','bola baling'),
+    -> ('3','bola sepak'),
+    -> ('4','badminton'),
+    -> ('5','softball');
+Query OK, 5 rows affected (0.003 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [kiosk]> select * from sukan_permainan;
++--------------------+----------------------+
+| id_sukan_permainan | nama_sukan_permainan |
++--------------------+----------------------+
+|                  1 | bola jaring          |
+|                  2 | bola baling          |
+|                  3 | bola sepak           |
+|                  4 | badminton            |
+|                  5 | softball             |
++--------------------+----------------------+
+5 rows in set (0.000 sec)
+
+MariaDB [kiosk]> select * from kelab_persatuan;
+Empty set (0.001 sec)
+
+MariaDB [kiosk]> insert into kelab_persatuan values
+    -> ('1','rekacipta'),
+    -> ('2','anti dadah'),
+    -> ('3','kenegaraan');
+Query OK, 3 rows affected (0.004 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [kiosk]> select * from kelab_persatuan;
++--------------------+----------------------+
+| id_kelab_persatuan | nama_kelab_persatuan |
++--------------------+----------------------+
+|                  1 | rekacipta            |
+|                  2 | anti dadah           |
+|                  3 | kenegaraan           |
++--------------------+----------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [kiosk]> select * from jabatan;
+Empty set (0.001 sec)
+
+MariaDB [kiosk]> insert into jabatan values
+    -> ('1','Perniagaan','5'),
+    -> ('2','Teknologi Maklumat','1');
+Query OK, 2 rows affected (0.004 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [kiosk]> select * from jabatan;
++------------+--------------------+-----------------+
+| id_jabatan | nama_jabatan       | id_ketuajabatan |
++------------+--------------------+-----------------+
+|          1 | Perniagaan         |               5 |
+|          2 | Teknologi Maklumat |               1 |
++------------+--------------------+-----------------+
+2 rows in set (0.000 sec)
+
+MariaDB [kiosk]> select * from program;
+Empty set (0.001 sec)
+
+MariaDB [kiosk]> insert into program values
+    -> ('1','Pengurusan Perniagaan','6','1'),
+    -> ('2','Perakaunan','8','1'),
+    -> ('3','Kesetiausahaan Pentadbiran','10','1'),
+    -> ('4','Teknologi Pangkalan Data Dan Aplikasi Web','2','2');
+Query OK, 4 rows affected (0.003 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [kiosk]> select * from program;
++------------+-------------------------------------------+-----------------+------------+
+| id_program | nama_program                              | id_ketuaprogram | id_jabatan |
++------------+-------------------------------------------+-----------------+------------+
+|          1 | Pengurusan Perniagaan                     |               6 |          1 |
+|          2 | Perakaunan                                |               8 |          1 |
+|          3 | Kesetiausahaan Pentadbiran                |              10 |          1 |
+|          4 | Teknologi Pangkalan Data Dan Aplikasi Web |               2 |          2 |
++------------+-------------------------------------------+-----------------+------------+
+4 rows in set (0.000 sec)
+
+MariaDB [kiosk]> select * from yuran;
+Empty set (0.001 sec)
+
+MariaDB [kiosk]> insert into yuran values
+    -> ('1','Kelab Warga'),
+    -> ('2','Wifi');
+Query OK, 2 rows affected (0.003 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [kiosk]> select * from yuran;
++----------+-------------+
+| id_yuran | jenis_yuran |
++----------+-------------+
+|        1 | Kelab Warga |
+|        2 | Wifi        |
++----------+-------------+
+2 rows in set (0.000 sec)
+
+MariaDB [kiosk]> desc rumah_sukan;
++------------------+--------------+------+-----+---------+----------------+
+| Field            | Type         | Null | Key | Default | Extra          |
++------------------+--------------+------+-----+---------+----------------+
+| id_rumah_sukan   | int(11)      | NO   | PRI | NULL    | auto_increment |
+| nama_rumah_sukan | varchar(100) | YES  |     | NULL    |                |
++------------------+--------------+------+-----+---------+----------------+
+2 rows in set (0.017 sec)
+
+MariaDB [kiosk]> create table rumah_sukan2 (select * from rumah_sukan);
+Query OK, 4 rows affected (0.034 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [kiosk]> select * from rumah_sukan2;
++----------------+------------------+
+| id_rumah_sukan | nama_rumah_sukan |
++----------------+------------------+
+|              1 | alfa             |
+|              2 | beta             |
+|              3 | gamma            |
+|              4 | sigma            |
++----------------+------------------+
+4 rows in set (0.000 sec)
+
+MariaDB [kiosk]> desc rumah_sukan2;
++------------------+--------------+------+-----+---------+-------+
+| Field            | Type         | Null | Key | Default | Extra |
++------------------+--------------+------+-----+---------+-------+
+| id_rumah_sukan   | int(11)      | NO   |     | 0       |       |
+| nama_rumah_sukan | varchar(100) | YES  |     | NULL    |       |
++------------------+--------------+------+-----+---------+-------+
+2 rows in set (0.012 sec)
+
+MariaDB [kiosk]> drop table rumah_sukan2;
+Query OK, 0 rows affected (0.009 sec)
+
+MariaDB [kiosk]> create table rumah_sukan2 (
+    -> id_rumah_sukan int(11) auto_increment primary key,
+    -> nama_rumah_sukan varchar(100));
+Query OK, 0 rows affected (0.027 sec)
+
+MariaDB [kiosk]> desc rumah_sukan2;
++------------------+--------------+------+-----+---------+----------------+
+| Field            | Type         | Null | Key | Default | Extra          |
++------------------+--------------+------+-----+---------+----------------+
+| id_rumah_sukan   | int(11)      | NO   | PRI | NULL    | auto_increment |
+| nama_rumah_sukan | varchar(100) | YES  |     | NULL    |                |
++------------------+--------------+------+-----+---------+----------------+
+2 rows in set (0.013 sec)
+
+MariaDB [kiosk]> select * from yuran_bayar;
++-----------+--------------+----------+--------------+--------+
+| id_ybayar | id_pensyarah | id_yuran | tarikh_bayar | jumlah |
++-----------+--------------+----------+--------------+--------+
+|         1 |            1 |        1 | NULL         | 150.00 |
+|         2 |            1 |        2 | NULL         |  50.00 |
+|         3 |            2 |        1 | NULL         | 100.00 |
+|         4 |            2 |        2 | NULL         |  50.00 |
+|         5 |            3 |        1 | NULL         | 150.00 |
+|         6 |            3 |        2 | NULL         |  50.00 |
+|         7 |            5 |        1 | NULL         | 150.00 |
+|         8 |            5 |        2 | NULL         |  50.00 |
++-----------+--------------+----------+--------------+--------+
+8 rows in set (0.000 sec)
+
+MariaDB [kiosk]> update yuran_bayar set tarikh_bayar = '2021-01-01' where id_ybayar IN(1,2,3,4);
+Query OK, 4 rows affected (0.005 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+MariaDB [kiosk]> select * from yuran_bayar;
++-----------+--------------+----------+--------------+--------+
+| id_ybayar | id_pensyarah | id_yuran | tarikh_bayar | jumlah |
++-----------+--------------+----------+--------------+--------+
+|         1 |            1 |        1 | 2021-01-01   | 150.00 |
+|         2 |            1 |        2 | 2021-01-01   |  50.00 |
+|         3 |            2 |        1 | 2021-01-01   | 100.00 |
+|         4 |            2 |        2 | 2021-01-01   |  50.00 |
+|         5 |            3 |        1 | NULL         | 150.00 |
+|         6 |            3 |        2 | NULL         |  50.00 |
+|         7 |            5 |        1 | NULL         | 150.00 |
+|         8 |            5 |        2 | NULL         |  50.00 |
++-----------+--------------+----------+--------------+--------+
+8 rows in set (0.000 sec)
+
+MariaDB [kiosk]> update yuran_bayar set tarikh_bayar = '2021-01-12' where id_ybayar IN(5,6);
+Query OK, 2 rows affected (0.003 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+MariaDB [kiosk]> select * from yuran_bayar;
++-----------+--------------+----------+--------------+--------+
+| id_ybayar | id_pensyarah | id_yuran | tarikh_bayar | jumlah |
++-----------+--------------+----------+--------------+--------+
+|         1 |            1 |        1 | 2021-01-01   | 150.00 |
+|         2 |            1 |        2 | 2021-01-01   |  50.00 |
+|         3 |            2 |        1 | 2021-01-01   | 100.00 |
+|         4 |            2 |        2 | 2021-01-01   |  50.00 |
+|         5 |            3 |        1 | 2021-01-12   | 150.00 |
+|         6 |            3 |        2 | 2021-01-12   |  50.00 |
+|         7 |            5 |        1 | NULL         | 150.00 |
+|         8 |            5 |        2 | NULL         |  50.00 |
++-----------+--------------+----------+--------------+--------+
+8 rows in set (0.000 sec)
+
+MariaDB [kiosk]> update yuran_bayar set tarikh_bayar = '2021-01-14' where id_ybayar IN(7,8);
+Query OK, 2 rows affected (0.003 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+MariaDB [kiosk]> select * from yuran_bayar;
++-----------+--------------+----------+--------------+--------+
+| id_ybayar | id_pensyarah | id_yuran | tarikh_bayar | jumlah |
++-----------+--------------+----------+--------------+--------+
+|         1 |            1 |        1 | 2021-01-01   | 150.00 |
+|         2 |            1 |        2 | 2021-01-01   |  50.00 |
+|         3 |            2 |        1 | 2021-01-01   | 100.00 |
+|         4 |            2 |        2 | 2021-01-01   |  50.00 |
+|         5 |            3 |        1 | 2021-01-12   | 150.00 |
+|         6 |            3 |        2 | 2021-01-12   |  50.00 |
+|         7 |            5 |        1 | 2021-01-14   | 150.00 |
+|         8 |            5 |        2 | 2021-01-14   |  50.00 |
++-----------+--------------+----------+--------------+--------+
+8 rows in set (0.000 sec)
+
+MariaDB [kiosk]> start transaction;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [kiosk]> select * from rumah_sukan2;
++----------------+------------------+
+| id_rumah_sukan | nama_rumah_sukan |
++----------------+------------------+
+|              1 | alfa             |
+|              2 | beta             |
+|              3 | gamma            |
+|              4 | sigma            |
++----------------+------------------+
+4 rows in set (0.000 sec)
+
+MariaDB [kiosk]> savepoint a;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [kiosk]> update rumah_sukan2 set nama_rumah_sukan = 'merah' where id_rumah_sukan = 1;
+Query OK, 1 row affected (0.000 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [kiosk]> select * from rumah_sukan2;
++----------------+------------------+
+| id_rumah_sukan | nama_rumah_sukan |
++----------------+------------------+
+|              1 | merah            |
+|              2 | beta             |
+|              3 | gamma            |
+|              4 | sigma            |
++----------------+------------------+
+4 rows in set (0.000 sec)
+
+MariaDB [kiosk]> savepoint b;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [kiosk]> update rumah_sukan2 set nama_rumah_sukan = 'hijau' where id_rumah_sukan = 2;
+Query OK, 1 row affected (0.000 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [kiosk]> select * from rumah_sukan2;
++----------------+------------------+
+| id_rumah_sukan | nama_rumah_sukan |
++----------------+------------------+
+|              1 | merah            |
+|              2 | hijau            |
+|              3 | gamma            |
+|              4 | sigma            |
++----------------+------------------+
+4 rows in set (0.000 sec)
+
+MariaDB [kiosk]> savepoint c;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [kiosk]> update rumah_sukan2 set nama_rumah_sukan = 'kuning' where id_rumah_sukan = 3;
+Query OK, 1 row affected (0.000 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [kiosk]> select * from rumah_sukan2;
++----------------+------------------+
+| id_rumah_sukan | nama_rumah_sukan |
++----------------+------------------+
+|              1 | merah            |
+|              2 | hijau            |
+|              3 | kuning           |
+|              4 | sigma            |
++----------------+------------------+
+4 rows in set (0.000 sec)
+
+MariaDB [kiosk]> savepoint d;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [kiosk]> update rumah_sukan2 set nama_rumah_sukan = 'biru' where id_rumah_sukan = 4;
+Query OK, 1 row affected (0.000 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [kiosk]> select * from rumah_sukan2;
++----------------+------------------+
+| id_rumah_sukan | nama_rumah_sukan |
++----------------+------------------+
+|              1 | merah            |
+|              2 | hijau            |
+|              3 | kuning           |
+|              4 | biru             |
++----------------+------------------+
+4 rows in set (0.000 sec)
+
+MariaDB [kiosk]> savepoint e;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [kiosk]> rollback to c;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [kiosk]> select * from rumah_sukan2;
++----------------+------------------+
+| id_rumah_sukan | nama_rumah_sukan |
++----------------+------------------+
+|              1 | merah            |
+|              2 | hijau            |
+|              3 | gamma            |
+|              4 | sigma            |
++----------------+------------------+
+4 rows in set (0.000 sec)
+
+MariaDB [kiosk]> rollback to a;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [kiosk]> select * from rumah_sukan2;
++----------------+------------------+
+| id_rumah_sukan | nama_rumah_sukan |
++----------------+------------------+
+|              1 | alfa             |
+|              2 | beta             |
+|              3 | gamma            |
+|              4 | sigma            |
++----------------+------------------+
+4 rows in set (0.000 sec)
+
+MariaDB [kiosk]> commit;
+Query OK, 0 rows affected (0.002 sec)
+
+MariaDB [kiosk]> insert into rumah_sukan2 values
+    -> ('5','delta');
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [kiosk]> select * from rumah_sukan2;
++----------------+------------------+
+| id_rumah_sukan | nama_rumah_sukan |
++----------------+------------------+
+|              1 | alfa             |
+|              2 | beta             |
+|              3 | gamma            |
+|              4 | sigma            |
+|              5 | delta            |
++----------------+------------------+
+5 rows in set (0.000 sec)
+
+MariaDB [kiosk]> delete from rumah_sukan2 where nama_rumah_sukan = 'sigma';
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [kiosk]> select * from rumah_sukan2;
++----------------+------------------+
+| id_rumah_sukan | nama_rumah_sukan |
++----------------+------------------+
+|              1 | alfa             |
+|              2 | beta             |
+|              3 | gamma            |
+|              5 | delta            |
++----------------+------------------+
+4 rows in set (0.000 sec)
+
+MariaDB [kiosk]> truncate rumah_sukan2;
+Query OK, 0 rows affected (0.032 sec)
+
+MariaDB [kiosk]> insert into my_students (student_name, student_class, student_donation) values
+    -> ('Izhar','Anggerik','720.50'),
+    -> ('Hakimi','Bakawali','362.20'),
+    -> ('Adelia','Cempaka','612.10'),
+    -> ('Najwa','Dahlia','900'),
+    -> ('Fitri','Anggerik','764.90'),
+    -> ('Syed','Bakawali','78.90'),
+    -> ('Farahin','Cempaka','89.90'),
+    -> ('Helena','Dahlia','891.50'),
+    -> ('Yusri','Anggerik','72.90'),
+    -> ('Danish','Cempaka','142.60'),
+    -> ('Farrah','Dahlia','1092.30');
+Query OK, 11 rows affected (0.004 sec)
+Records: 11  Duplicates: 0  Warnings: 0
+
+MariaDB [kiosk]> select * from my_students;
++------------+--------------+---------------+------------------+
+| id_student | student_name | student_class | student_donation |
++------------+--------------+---------------+------------------+
+|          1 | Izhar        | Anggerik      |           720.50 |
+|          2 | Hakimi       | Bakawali      |           362.20 |
+|          3 | Adelia       | Cempaka       |           612.10 |
+|          4 | Najwa        | Dahlia        |           900.00 |
+|          5 | Fitri        | Anggerik      |           764.90 |
+|          6 | Syed         | Bakawali      |            78.90 |
+|          7 | Farahin      | Cempaka       |            89.90 |
+|          8 | Helena       | Dahlia        |           891.50 |
+|          9 | Yusri        | Anggerik      |            72.90 |
+|         10 | Danish       | Cempaka       |           142.60 |
+|         11 | Farrah       | Dahlia        |          1092.30 |
++------------+--------------+---------------+------------------+
+11 rows in set (0.000 sec)
+
+MariaDB [kiosk]> select distinct student_class from my_students;
++---------------+
+| student_class |
++---------------+
+| Anggerik      |
+| Bakawali      |
+| Cempaka       |
+| Dahlia        |
++---------------+
+4 rows in set (0.002 sec)
+
+MariaDB [kiosk]> select student_name as 'CLASS : CEMPAKA' from my_students where student_class = 'Cempaka';
++-----------------+
+| CLASS : CEMPAKA |
++-----------------+
+| Adelia          |
+| Farahin         |
+| Danish          |
++-----------------+
+3 rows in set (0.002 sec)
+
+MariaDB [kiosk]> select student_name as 'NAME', student_class as 'CLASS' from my_students where student_class = 'Cempaka' or student_class = 'Dahlia';
++---------+---------+
+| NAME    | CLASS   |
++---------+---------+
+| Adelia  | Cempaka |
+| Najwa   | Dahlia  |
+| Farahin | Cempaka |
+| Helena  | Dahlia  |
+| Danish  | Cempaka |
+| Farrah  | Dahlia  |
++---------+---------+
+6 rows in set (0.000 sec)
+
+MariaDB [kiosk]> select student_name as 'CLASS : CEMPAKA, DONATION > RM500', student_donation as 'AMOUNT' from my_students where student_class = 'Cempaka' and student_donation > 500;
++-----------------------------------+--------+
+| CLASS : CEMPAKA, DONATION > RM500 | AMOUNT |
++-----------------------------------+--------+
+| Adelia                            | 612.10 |
++-----------------------------------+--------+
+1 row in set (0.002 sec)
+
+MariaDB [kiosk]> select id_student as 'EVEN NUMBER ONLY', student_name as 'NAME'
+    -> from my_students
+    -> where id_student IN(2,4,6,8,10);
++------------------+--------+
+| EVEN NUMBER ONLY | NAME   |
++------------------+--------+
+|                2 | Hakimi |
+|                4 | Najwa  |
+|                6 | Syed   |
+|                8 | Helena |
+|               10 | Danish |
++------------------+--------+
+5 rows in set (0.044 sec)
+
+MariaDB [kiosk]> select student_name as 'DONATION : RM500-RM1000', student_donation as 'AMOUNT' from my_students where student_donation between 500 and 1000;
++-------------------------+--------+
+| DONATION : RM500-RM1000 | AMOUNT |
++-------------------------+--------+
+| Izhar                   | 720.50 |
+| Adelia                  | 612.10 |
+| Najwa                   | 900.00 |
+| Fitri                   | 764.90 |
+| Helena                  | 891.50 |
++-------------------------+--------+
+5 rows in set (0.003 sec)
+
+MariaDB [kiosk]> select student_name as 'Start From F' from my_students where student_name like 'F%';
++--------------+
+| Start From F |
++--------------+
+| Fitri        |
+| Farahin      |
+| Farrah       |
++--------------+
+3 rows in set (0.001 sec)
+
+MariaDB [kiosk]> select student_name as 'Ends with H' from my_students where student_name like '%H';
++-------------+
+| Ends with H |
++-------------+
+| Danish      |
+| Farrah      |
++-------------+
+2 rows in set (0.000 sec)
+
+MariaDB [kiosk]> select student_name as 'Contain -AR-'
+    -> from my_students
+    -> where student_name like '%AR%';
++--------------+
+| Contain -AR- |
++--------------+
+| Izhar        |
+| Farahin      |
+| Farrah       |
++--------------+
+3 rows in set (0.006 sec)
+
+MariaDB [kiosk]> select student_name as 'NAME', student_class as 'CLASS' from my_students where student_class = 'Cempaka' or student_class = 'Dahlia'
+    -> order by student_class ASC;
++---------+---------+
+| NAME    | CLASS   |
++---------+---------+
+| Adelia  | Cempaka |
+| Farahin | Cempaka |
+| Danish  | Cempaka |
+| Najwa   | Dahlia  |
+| Helena  | Dahlia  |
+| Farrah  | Dahlia  |
++---------+---------+
+6 rows in set (0.002 sec)
+
+MariaDB [kiosk]> select student_name as 'NAME', student_class as 'CLASS' from my_students where student_class = 'Cempaka' or student_class = 'Dahlia'
+    -> order by student_name ASC;
++---------+---------+
+| NAME    | CLASS   |
++---------+---------+
+| Adelia  | Cempaka |
+| Danish  | Cempaka |
+| Farahin | Cempaka |
+| Farrah  | Dahlia  |
+| Helena  | Dahlia  |
+| Najwa   | Dahlia  |
++---------+---------+
+6 rows in set (0.000 sec)
+
+MariaDB [kiosk]> select student_class as 'Class', count(id_student) as 'Num. of Students' from my_students
+    -> group by student_class;
++----------+------------------+
+| Class    | Num. of Students |
++----------+------------------+
+| Anggerik |                3 |
+| Bakawali |                2 |
+| Cempaka  |                3 |
+| Dahlia   |                3 |
++----------+------------------+
+4 rows in set (0.004 sec)
+
+MariaDB [kiosk]> select student_class as 'Class', count(id_student) as 'Num. of Students' from my_students
+    -> group by student_class having student_class = 'Bakawali';
++----------+------------------+
+| Class    | Num. of Students |
++----------+------------------+
+| Bakawali |                2 |
++----------+------------------+
+1 row in set (0.001 sec)
+
+MariaDB [kiosk]> select (select student_donation from my_students where id_student = 1)
+    -> + (select student_donation from my_students where id_student = 2) as 'Donation Amount Izhar & Hakimi';
++--------------------------------+
+| Donation Amount Izhar & Hakimi |
++--------------------------------+
+|                        1082.70 |
++--------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [kiosk]> select student_name as 'ALL STUDENTS except -Cempaka-', student_class as 'CLASS' from my_students
+    -> where student_class != 'Cempaka';
++-------------------------------+----------+
+| ALL STUDENTS except -Cempaka- | CLASS    |
++-------------------------------+----------+
+| Izhar                         | Anggerik |
+| Hakimi                        | Bakawali |
+| Najwa                         | Dahlia   |
+| Fitri                         | Anggerik |
+| Syed                          | Bakawali |
+| Helena                        | Dahlia   |
+| Yusri                         | Anggerik |
+| Farrah                        | Dahlia   |
++-------------------------------+----------+
+8 rows in set (0.002 sec)
+
+MariaDB [kiosk]> select AVG(student_donation) from my_students;
++-----------------------+
+| AVG(student_donation) |
++-----------------------+
+|            520.709097 |
++-----------------------+
+1 row in set (0.000 sec)
+
+MariaDB [kiosk]> select ROUND(AVG(student_donation), 2) as 'AVERAGE OF COLLECTION' from my_students;
++-----------------------+
+| AVERAGE OF COLLECTION |
++-----------------------+
+|                520.71 |
++-----------------------+
+1 row in set (0.002 sec)
+
+MariaDB [kiosk]> select  count(id_student) as 'NUMBER OF DONATION COLLECTOR' from my_students;
++------------------------------+
+| NUMBER OF DONATION COLLECTOR |
++------------------------------+
+|                           11 |
++------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [kiosk]> select count(id_student) as 'NUMBER OF DONATION COLLECTOR' from my_students;
++------------------------------+
+| NUMBER OF DONATION COLLECTOR |
++------------------------------+
+|                           11 |
++------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [kiosk]> select count(id_student) 'NUMBER OF DONATION COLLECTOR' from my_students;
++------------------------------+
+| NUMBER OF DONATION COLLECTOR |
++------------------------------+
+|                           11 |
++------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [kiosk]> select SUM(student_donation) 'TOTAL OF COLLECTION' from my_students;
++---------------------+
+| TOTAL OF COLLECTION |
++---------------------+
+|             5727.80 |
++---------------------+
+1 row in set (0.000 sec)
+
+MariaDB [kiosk]> select SUM(student_donation) 'TOTAL COLLECTION WAWA & QIMIE' from my_students where id_student IN(2,4);
++-------------------------------+
+| TOTAL COLLECTION WAWA & QIMIE |
++-------------------------------+
+|                       1262.20 |
++-------------------------------+
+1 row in set (0.002 sec)
+
+MariaDB [kiosk]> select MAX(student_donation) 'HIGHEST COLLECTION' from my_students;
++--------------------+
+| HIGHEST COLLECTION |
++--------------------+
+|            1092.30 |
++--------------------+
+1 row in set (0.000 sec)
+
+MariaDB [kiosk]> select MIN(student_donation) 'LOWEST COLLECTION' from my_students;
++-------------------+
+| LOWEST COLLECTION |
++-------------------+
+|             72.90 |
++-------------------+
+1 row in set (0.000 sec)
+
+MariaDB [kiosk]> select UCASE(student_name) from my_students;
++---------------------+
+| UCASE(student_name) |
++---------------------+
+| IZHAR               |
+| HAKIMI              |
+| ADELIA              |
+| NAJWA               |
+| FITRI               |
+| SYED                |
+| FARAHIN             |
+| HELENA              |
+| YUSRI               |
+| DANISH              |
+| FARRAH              |
++---------------------+
+11 rows in set (0.002 sec)
+
+MariaDB [kiosk]> select LCASE(student_name) from my_students;
++---------------------+
+| LCASE(student_name) |
++---------------------+
+| izhar               |
+| hakimi              |
+| adelia              |
+| najwa               |
+| fitri               |
+| syed                |
+| farahin             |
+| helena              |
+| yusri               |
+| danish              |
+| farrah              |
++---------------------+
+11 rows in set (0.002 sec)
+
+MariaDB [kiosk]> select MID(student_name,2,4) from my_students;
++-----------------------+
+| MID(student_name,2,4) |
++-----------------------+
+| zhar                  |
+| akim                  |
+| deli                  |
+| ajwa                  |
+| itri                  |
+| yed                   |
+| arah                  |
+| elen                  |
+| usri                  |
+| anis                  |
+| arra                  |
++-----------------------+
+11 rows in set (0.000 sec)
+
+MariaDB [kiosk]> select student_name as 'NAME', LENGTH(student_donation) as 'LENGTH' from my_students;
++---------+--------+
+| NAME    | LENGTH |
++---------+--------+
+| Izhar   |      6 |
+| Hakimi  |      6 |
+| Adelia  |      6 |
+| Najwa   |      6 |
+| Fitri   |      6 |
+| Syed    |      5 |
+| Farahin |      5 |
+| Helena  |      6 |
+| Yusri   |      5 |
+| Danish  |      6 |
+| Farrah  |      7 |
++---------+--------+
+11 rows in set (0.000 sec)
+
+MariaDB [kiosk]> select student_donation as 'BEFORE ROUND', ROUND(student_donation,1) as 'AFTER ROUND' from my_students;
++--------------+-------------+
+| BEFORE ROUND | AFTER ROUND |
++--------------+-------------+
+|       720.50 |       720.5 |
+|       362.20 |       362.2 |
+|       612.10 |       612.1 |
+|       900.00 |       900.0 |
+|       764.90 |       764.9 |
+|        78.90 |        78.9 |
+|        89.90 |        89.9 |
+|       891.50 |       891.5 |
+|        72.90 |        72.9 |
+|       142.60 |       142.6 |
+|      1092.30 |      1092.3 |
++--------------+-------------+
+11 rows in set (0.000 sec)
+
+MariaDB [kiosk]> select student_name as 'NAME', student_donation as 'DONATION', now() as 'SUBMIT DATE' from my_students;
++---------+----------+---------------------+
+| NAME    | DONATION | SUBMIT DATE         |
++---------+----------+---------------------+
+| Izhar   |   720.50 | 2023-03-29 10:03:15 |
+| Hakimi  |   362.20 | 2023-03-29 10:03:15 |
+| Adelia  |   612.10 | 2023-03-29 10:03:15 |
+| Najwa   |   900.00 | 2023-03-29 10:03:15 |
+| Fitri   |   764.90 | 2023-03-29 10:03:15 |
+| Syed    |    78.90 | 2023-03-29 10:03:15 |
+| Farahin |    89.90 | 2023-03-29 10:03:15 |
+| Helena  |   891.50 | 2023-03-29 10:03:15 |
+| Yusri   |    72.90 | 2023-03-29 10:03:15 |
+| Danish  |   142.60 | 2023-03-29 10:03:15 |
+| Farrah  |  1092.30 | 2023-03-29 10:03:15 |
++---------+----------+---------------------+
+11 rows in set (0.002 sec)
+
+MariaDB [kiosk]> select tarikh_bayar, date_add(tarikh_bayar, interval 10 day) as 'TARIKH SELEPAS 10 HARI' from yuran_bayar;
++--------------+------------------------+
+| tarikh_bayar | TARIKH SELEPAS 10 HARI |
++--------------+------------------------+
+| 2021-01-01   | 2021-01-11             |
+| 2021-01-01   | 2021-01-11             |
+| 2021-01-01   | 2021-01-11             |
+| 2021-01-01   | 2021-01-11             |
+| 2021-01-12   | 2021-01-22             |
+| 2021-01-12   | 2021-01-22             |
+| 2021-01-14   | 2021-01-24             |
+| 2021-01-14   | 2021-01-24             |
++--------------+------------------------+
+8 rows in set (0.002 sec)
+
+MariaDB [kiosk]> select tarikh_bayar, date_sub(tarikh_bayar, interval 10 day) as 'TARIKH SEBELUM 10 HARI' from yuran_bayar;
++--------------+------------------------+
+| tarikh_bayar | TARIKH SEBELUM 10 HARI |
++--------------+------------------------+
+| 2021-01-01   | 2020-12-22             |
+| 2021-01-01   | 2020-12-22             |
+| 2021-01-01   | 2020-12-22             |
+| 2021-01-01   | 2020-12-22             |
+| 2021-01-12   | 2021-01-02             |
+| 2021-01-12   | 2021-01-02             |
+| 2021-01-14   | 2021-01-04             |
+| 2021-01-14   | 2021-01-04             |
++--------------+------------------------+
+8 rows in set (0.000 sec)
+
+MariaDB [kiosk]> select date_format(tarikh_bayar, "%D") from yuran_bayar;
++---------------------------------+
+| date_format(tarikh_bayar, "%D") |
++---------------------------------+
+| 1st                             |
+| 1st                             |
+| 1st                             |
+| 1st                             |
+| 12th                            |
+| 12th                            |
+| 14th                            |
+| 14th                            |
++---------------------------------+
+8 rows in set (0.000 sec)
+
+MariaDB [kiosk]> select date_format(tarikh_bayar, "%M") from yuran_bayar;
++---------------------------------+
+| date_format(tarikh_bayar, "%M") |
++---------------------------------+
+| January                         |
+| January                         |
+| January                         |
+| January                         |
+| January                         |
+| January                         |
+| January                         |
+| January                         |
++---------------------------------+
+8 rows in set (0.002 sec)
+
+MariaDB [kiosk]> select date_format(tarikh_bayar, "%Y") from yuran_bayar;
++---------------------------------+
+| date_format(tarikh_bayar, "%Y") |
++---------------------------------+
+| 2021                            |
+| 2021                            |
+| 2021                            |
+| 2021                            |
+| 2021                            |
+| 2021                            |
+| 2021                            |
+| 2021                            |
++---------------------------------+
+8 rows in set (0.000 sec)
+
+MariaDB [kiosk]> select tarikh_bayar as 'SEBELUM', date_format(tarikh_bayar, "%D %M %Y") as 'SELEPAS FORMAT' from yuran_bayar;
++------------+-------------------+
+| SEBELUM    | SELEPAS FORMAT    |
++------------+-------------------+
+| 2021-01-01 | 1st January 2021  |
+| 2021-01-01 | 1st January 2021  |
+| 2021-01-01 | 1st January 2021  |
+| 2021-01-01 | 1st January 2021  |
+| 2021-01-12 | 12th January 2021 |
+| 2021-01-12 | 12th January 2021 |
+| 2021-01-14 | 14th January 2021 |
+| 2021-01-14 | 14th January 2021 |
++------------+-------------------+
+8 rows in set (0.000 sec)
+
+MariaDB [kiosk]> select tarikh_bayar as 'SEBELUM', date_format(tarikh_bayar, "%d %m %y") as 'SELEPAS FORMAT' from yuran_bayar;
++------------+----------------+
+| SEBELUM    | SELEPAS FORMAT |
++------------+----------------+
+| 2021-01-01 | 01 01 21       |
+| 2021-01-01 | 01 01 21       |
+| 2021-01-01 | 01 01 21       |
+| 2021-01-01 | 01 01 21       |
+| 2021-01-12 | 12 01 21       |
+| 2021-01-12 | 12 01 21       |
+| 2021-01-14 | 14 01 21       |
+| 2021-01-14 | 14 01 21       |
++------------+----------------+
+8 rows in set (0.000 sec)
+
+MariaDB [kiosk]> select nama_pensyarah as 'NAMA PENSYARAH' from pensyarah;
++----------------+
+| NAMA PENSYARAH |
++----------------+
+| Suriyah        |
+| Mastura        |
+| Yussalina      |
+| Yuswadi        |
+| Farhah         |
+| Liew           |
+| Anizah         |
+| Huda           |
+| Faaizun        |
+| Nadrah         |
+| Suhaida        |
++----------------+
+11 rows in set (0.003 sec)
+
+MariaDB [kiosk]> select nama_jabatan as 'NAMA JABATAN' from jabatan;
++--------------------+
+| NAMA JABATAN       |
++--------------------+
+| Perniagaan         |
+| Teknologi Maklumat |
++--------------------+
+2 rows in set (0.000 sec)
+
+MariaDB [kiosk]> select nama_program as 'NAMA PROGRAM' from program;
++-------------------------------------------+
+| NAMA PROGRAM                              |
++-------------------------------------------+
+| Pengurusan Perniagaan                     |
+| Perakaunan                                |
+| Kesetiausahaan Pentadbiran                |
+| Teknologi Pangkalan Data Dan Aplikasi Web |
++-------------------------------------------+
+4 rows in set (0.000 sec)
+
+MariaDB [kiosk]> select jabatan.nama_jabatan as 'NAMA JABATAN',
+    -> pensyarah.nama_pensyarah as 'KETUA JABATAN'
+    -> from jabatan, pensyarah
+    -> where jabatan.id_ketuajabatan = pensyarah.id_pensyarah;
++--------------------+---------------+
+| NAMA JABATAN       | KETUA JABATAN |
++--------------------+---------------+
+| Perniagaan         | Farhah        |
+| Teknologi Maklumat | Suriyah       |
++--------------------+---------------+
+2 rows in set (0.001 sec)
+
+MariaDB [kiosk]> select jabatan.nama_jabatan as 'NAMA JABATAN',
+    -> program.nama_program as 'NAMA PROGRAM'
+    -> from jabatan, program
+    -> where jabatan.id_jabatan = program.id_jabatan;
++--------------------+-------------------------------------------+
+| NAMA JABATAN       | NAMA PROGRAM                              |
++--------------------+-------------------------------------------+
+| Perniagaan         | Pengurusan Perniagaan                     |
+| Perniagaan         | Perakaunan                                |
+| Perniagaan         | Kesetiausahaan Pentadbiran                |
+| Teknologi Maklumat | Teknologi Pangkalan Data Dan Aplikasi Web |
++--------------------+-------------------------------------------+
+4 rows in set (0.000 sec)
+
+MariaDB [kiosk]> select jabatan.nama_jabatan as 'NAMA JABATAN', program.nama_program as 'NAMA PROGRAM', pensyarah.nama_pensyarah as 'KETUA PROGRAM'
+    -> from program
+    -> inner join jabatan
+    -> on jabatan.id_jabatan = program.id_jabatan
+    -> inner join pensyarah
+    -> on pensyarah.id_pensyarah = program.id_ketuaprogram;
++--------------------+-------------------------------------------+---------------+
+| NAMA JABATAN       | NAMA PROGRAM                              | KETUA PROGRAM |
++--------------------+-------------------------------------------+---------------+
+| Perniagaan         | Pengurusan Perniagaan                     | Liew          |
+| Perniagaan         | Perakaunan                                | Huda          |
+| Perniagaan         | Kesetiausahaan Pentadbiran                | Nadrah        |
+| Teknologi Maklumat | Teknologi Pangkalan Data Dan Aplikasi Web | Mastura       |
++--------------------+-------------------------------------------+---------------+
+4 rows in set (0.001 sec)
+
+MariaDB [kiosk]> select jabatan.nama_jabatan as 'NAMA JABATAN', program.nama_program as 'NAMA PROGRAM', pensyarah.nama_pensyarah as 'KETUA PROGRAM'
+    -> from program
+    -> inner join jabatan
+    -> on jabatan.id_jabatan = program.id_jabatan
+    -> inner join pensyarah
+    -> on program.id_program = pensyarah.id_program;
++--------------------+-------------------------------------------+---------------+
+| NAMA JABATAN       | NAMA PROGRAM                              | KETUA PROGRAM |
++--------------------+-------------------------------------------+---------------+
+| Teknologi Maklumat | Teknologi Pangkalan Data Dan Aplikasi Web | Suriyah       |
+| Teknologi Maklumat | Teknologi Pangkalan Data Dan Aplikasi Web | Mastura       |
+| Teknologi Maklumat | Teknologi Pangkalan Data Dan Aplikasi Web | Yussalina     |
+| Teknologi Maklumat | Teknologi Pangkalan Data Dan Aplikasi Web | Yuswadi       |
+| Perniagaan         | Kesetiausahaan Pentadbiran                | Farhah        |
+| Perniagaan         | Kesetiausahaan Pentadbiran                | Liew          |
+| Perniagaan         | Kesetiausahaan Pentadbiran                | Anizah        |
+| Perniagaan         | Perakaunan                                | Huda          |
+| Perniagaan         | Perakaunan                                | Faaizun       |
+| Perniagaan         | Pengurusan Perniagaan                     | Nadrah        |
+| Perniagaan         | Pengurusan Perniagaan                     | Suhaida       |
++--------------------+-------------------------------------------+---------------+
+11 rows in set (0.001 sec)
+
+MariaDB [kiosk]> select count(id_pensyarah) as 'BILANGAN SEMUA PENSYARAH' from pensyarah;
++--------------------------+
+| BILANGAN SEMUA PENSYARAH |
++--------------------------+
+|                       11 |
++--------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [kiosk]> select jabatan.nama_jabatan as 'NAMA JABATAN', count(id_program) as 'BILANGAN PROGRAM'
+    -> from jabatan
+    -> inner join program
+    -> on jabatan.id_jabatan = program.id_program
+    -> group by jabatan.nama_jabatan;
++--------------------+------------------+
+| NAMA JABATAN       | BILANGAN PROGRAM |
++--------------------+------------------+
+| Perniagaan         |                1 |
+| Teknologi Maklumat |                1 |
++--------------------+------------------+
+2 rows in set (0.001 sec)
+
+MariaDB [kiosk]> select program.nama_program as 'NAMA PROGRAM', count(id_pensyarah) as 'BILANGAN PENSYARAH'
+    -> from program
+    -> inner join pensyarah
+    -> on program.id_program = pensyarah.id_program
+    -> group by program.nama_program;
++-------------------------------------------+--------------------+
+| NAMA PROGRAM                              | BILANGAN PENSYARAH |
++-------------------------------------------+--------------------+
+| Kesetiausahaan Pentadbiran                |                  3 |
+| Pengurusan Perniagaan                     |                  2 |
+| Perakaunan                                |                  2 |
+| Teknologi Pangkalan Data Dan Aplikasi Web |                  4 |
++-------------------------------------------+--------------------+
+4 rows in set (0.001 sec)

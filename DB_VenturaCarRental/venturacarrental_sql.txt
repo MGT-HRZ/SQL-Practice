@@ -1,0 +1,269 @@
+MariaDB [(none)]> create database venturacarrental;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [venturacarrental]> create table pelanggan (
+    -> ICPelanggan int auto_increment primary key,
+    -> Nama varchar(100) not null,
+    -> Jantina char(1) not null,
+    -> Alamat varchar(100) not null,
+    -> Negeri varchar(50) not null,
+    -> NoHP int(50) not null);
+Query OK, 0 rows affected (0.030 sec)
+
+MariaDB [venturacarrental]> desc pelanggan;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| ICPelanggan | varchar(20)  | NO   | PRI | NULL    |       |
+| Nama        | varchar(100) | NO   |     | NULL    |       |
+| Jantina     | char(1)      | NO   |     | NULL    |       |
+| Alamat      | varchar(100) | NO   |     | NULL    |       |
+| Negeri      | varchar(50)  | NO   |     | NULL    |       |
+| NoHP        | varchar(50)  | NO   |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+6 rows in set (0.015 sec)
+
+MariaDB [venturacarrental]> alter table pelanggan modify column ICPelanggan int primary key;
+ERROR 1068 (42000): Multiple primary key defined
+MariaDB [venturacarrental]> alter table pelanggan modify column ICPelanggan int;
+Query OK, 0 rows affected (0.017 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [venturacarrental]> desc pelanggan;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| ICPelanggan | int(11)      | NO   | PRI | NULL    |       |
+| Nama        | varchar(100) | NO   |     | NULL    |       |
+| Jantina     | char(1)      | NO   |     | NULL    |       |
+| Alamat      | varchar(100) | NO   |     | NULL    |       |
+| Negeri      | varchar(50)  | NO   |     | NULL    |       |
+| NoHP        | int(50)      | NO   |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+6 rows in set (0.011 sec)
+
+MariaDB [venturacarrental]> create table kereta (
+    -> NoPendaftaran varchar(50) primary key,
+    -> Jenama varchar(50) not null,
+    -> Model varchar(50) not null,
+    -> Harga int(50) not null);
+Query OK, 0 rows affected (0.034 sec)
+
+MariaDB [venturacarrental]> desc kereta;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| NoPendaftaran | varchar(50) | NO   | PRI | NULL    |       |
+| Jenama        | varchar(50) | NO   |     | NULL    |       |
+| Model         | varchar(50) | NO   |     | NULL    |       |
+| Harga         | int(50)     | NO   |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+4 rows in set (0.016 sec)
+
+MariaDB [venturacarrental]> create table tempahan (
+    -> OrderID int auto_increment primary key,
+    -> ICPelanggan int not null,
+    -> foreign key(ICPelanggan) references pelanggan(ICPelanggan),
+    -> NoPendaftaran varchar(50) not null,
+    -> foreign key(NoPendaftaran) references kereta(NoPendaftaran),
+    -> Hari int not null,
+    -> Jumlah int not null,
+    -> TarikhMula date,
+    -> TarikhTamat date);
+Query OK, 0 rows affected (0.032 sec)
+
+MariaDB [venturacarrental]> desc tempahan;
++---------------+-------------+------+-----+---------+----------------+
+| Field         | Type        | Null | Key | Default | Extra          |
++---------------+-------------+------+-----+---------+----------------+
+| OrderID       | int(11)     | NO   | PRI | NULL    | auto_increment |
+| ICPelanggan   | int(11)     | NO   | MUL | NULL    |                |
+| NoPendaftaran | varchar(50) | NO   | MUL | NULL    |                |
+| Hari          | int(11)     | NO   |     | NULL    |                |
+| Jumlah        | int(11)     | NO   |     | NULL    |                |
+| TarikhMula    | date        | YES  |     | NULL    |                |
+| TarikhTamat   | date        | YES  |     | NULL    |                |
++---------------+-------------+------+-----+---------+----------------+
+7 rows in set (0.018 sec)
+
+MariaDB [venturacarrental]> insert into pelanggan values
+    -> ('910517048110','Siti Zulaikha binti Ismail','P','Batu Pahat','Johor','601133005656'),
+    -> ('780131565100','Nur Anisah binti Zulkifli','P','Sungai Petani','Kedah','601312345678'),
+    -> ('950428067875','Muhammad Ali bin Adam','L','Sepang','Selangor','601798765432'),
+    -> ('991225045354','Nurul Amirah binti Junaidi','P','Nilai','Negeri Sembilan','601400228888'),
+    -> ('880309105121','Helmi Harris','L','Bukit Mertajam','Pulau Pinang','601130304040');
+Query OK, 5 rows affected (0.004 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [venturacarrental]> select * from pelanggan;
++--------------+----------------------------+---------+----------------+-----------------+--------------+
+| ICPelanggan  | Nama                       | Jantina | Alamat         | Negeri          | NoHP         |
++--------------+----------------------------+---------+----------------+-----------------+--------------+
+| 780131565100 | Nur Anisah binti Zulkifli  | P       | Sungai Petani  | Kedah           | 601312345678 |
+| 880309105121 | Helmi Harris               | L       | Bukit Mertajam | Pulau Pinang    | 601130304040 |
+| 910517048110 | Siti Zulaikha binti Ismail | P       | Batu Pahat     | Johor           | 601133005656 |
+| 950428067875 | Muhammad Ali bin Adam      | L       | Sepang         | Selangor        | 601798765432 |
+| 991225045354 | Nurul Amirah binti Junaidi | P       | Nilai          | Negeri Sembilan | 601400228888 |
++--------------+----------------------------+---------+----------------+-----------------+--------------+
+5 rows in set (0.000 sec)
+
+MariaDB [venturacarrental]> create table tempahan (
+    -> OrderID int auto_increment primary key,
+    -> ICPelanggan varchar(20) not null,
+    -> foreign key(ICPelanggan) references pelanggan(ICPelanggan),
+    -> NoPendaftaran varchar(50) not null,
+    -> foreign key(NoPendaftaran) references kereta(NoPendaftaran),
+    -> Hari int not null,
+    -> Jumlah int not null,
+    -> TarikhMula date,
+    -> TarikhTamat date);
+Query OK, 0 rows affected (0.031 sec)
+
+MariaDB [venturacarrental]> start transaction;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [venturacarrental]> select * from pelanggan;
++--------------+----------------------------+---------+----------------+-----------------+--------------+
+| ICPelanggan  | Nama                       | Jantina | Alamat         | Negeri          | NoHP         |
++--------------+----------------------------+---------+----------------+-----------------+--------------+
+| 780131565100 | Nur Anisah binti Zulkifli  | P       | Sungai Petani  | Kedah           | 601312345678 |
+| 880309105121 | Helmi Harris               | L       | Bukit Mertajam | Pulau Pinang    | 601130304040 |
+| 910517048110 | Siti Zulaikha binti Ismail | P       | Batu Pahat     | Johor           | 601133005656 |
+| 950428067875 | Muhammad Ali bin Adam      | L       | Sepang         | Selangor        | 601798765432 |
+| 991225045354 | Nurul Amirah binti Junaidi | P       | Nilai          | Negeri Sembilan | 601400228888 |
++--------------+----------------------------+---------+----------------+-----------------+--------------+
+5 rows in set (0.000 sec)
+
+MariaDB [venturacarrental]> insert into kereta values
+    -> ('JPQ7979','Perodua','Viva','80'),
+    -> ('BMX6200','Hyundai','Elantra','200'),
+    -> ('BPA7880','Proton','Exora','300'),
+    -> ('VAP8048','Honda','City','230'),
+    -> ('JSE6869','Proton','Saga','150'),
+    -> ('WA7698H','Proton','Exora','300'),
+    -> ('BNQ6866','Perodua','Myvi','150');
+Query OK, 7 rows affected (0.004 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+MariaDB [venturacarrental]> select * from kereta;
++---------------+---------+---------+-------+
+| NoPendaftaran | Jenama  | Model   | Harga |
++---------------+---------+---------+-------+
+| BMX6200       | Hyundai | Elantra |   200 |
+| BNQ6866       | Perodua | Myvi    |   150 |
+| BPA7880       | Proton  | Exora   |   300 |
+| JPQ7979       | Perodua | Viva    |    80 |
+| JSE6869       | Proton  | Saga    |   150 |
+| VAP8048       | Honda   | City    |   230 |
+| WA7698H       | Proton  | Exora   |   300 |
++---------------+---------+---------+-------+
+7 rows in set (0.000 sec)
+
+MariaDB [venturacarrental]> insert into tempahan values
+    -> ('1','780131565100','BMX6200','1','200','2021-10-15','2021-10-15'),
+    -> ('2','880309105121','JPQ7979','3','240','2021-10-15','2021-10-17'),
+    -> ('3','950428067875','VAP8048','2','460','2021-11-19','2021-11-20'),
+    -> ('4','991225045354','JSE6869','1','150','2021-11-23','2021-11-23'),
+    -> ('5','910517048110','WA7698H','2','600','2021-12-05','2021-12-06'),
+    -> ('6','880309105121','JPQ7979','5','400','2021-12-14','2021-12-18');
+Query OK, 6 rows affected (0.005 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+MariaDB [venturacarrental]> select * from tempahan;
++---------+--------------+---------------+------+--------+------------+-------------+
+| OrderID | ICPelanggan  | NoPendaftaran | Hari | Jumlah | TarikhMula | TarikhTamat |
++---------+--------------+---------------+------+--------+------------+-------------+
+|       1 | 780131565100 | BMX6200       |    1 |    200 | 2021-10-15 | 2021-10-15  |
+|       2 | 880309105121 | JPQ7979       |    3 |    240 | 2021-10-15 | 2021-10-17  |
+|       3 | 950428067875 | VAP8048       |    2 |    460 | 2021-11-19 | 2021-11-20  |
+|       4 | 991225045354 | JSE6869       |    1 |    150 | 2021-11-23 | 2021-11-23  |
+|       5 | 910517048110 | WA7698H       |    2 |    600 | 2021-12-05 | 2021-12-06  |
+|       6 | 880309105121 | JPQ7979       |    5 |    400 | 2021-12-14 | 2021-12-18  |
++---------+--------------+---------------+------+--------+------------+-------------+
+6 rows in set (0.000 sec)
+
+MariaDB [venturacarrental]> update pelanggan set nama = 'Helmi bin Harris'
+    -> where nama like 'Helmi%';
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [venturacarrental]> select * from pelanggan;
++--------------+----------------------------+---------+----------------+-----------------+--------------+
+| ICPelanggan  | Nama                       | Jantina | Alamat         | Negeri          | NoHP         |
++--------------+----------------------------+---------+----------------+-----------------+--------------+
+| 780131565100 | Nur Anisah binti Zulkifli  | P       | Sungai Petani  | Kedah           | 601312345678 |
+| 880309105121 | Helmi bin Harris           | L       | Bukit Mertajam | Pulau Pinang    | 601130304040 |
+| 910517048110 | Siti Zulaikha binti Ismail | P       | Batu Pahat     | Johor           | 601133005656 |
+| 950428067875 | Muhammad Ali bin Adam      | L       | Sepang         | Selangor        | 601798765432 |
+| 991225045354 | Nurul Amirah binti Junaidi | P       | Nilai          | Negeri Sembilan | 601400228888 |
++--------------+----------------------------+---------+----------------+-----------------+--------------+
+5 rows in set (0.000 sec)
+
+MariaDB [venturacarrental]> select Model as 'Model Jenama Proton' from kereta where Jenama = 'Proton';
++---------------------+
+| Model Jenama Proton |
++---------------------+
+| Exora               |
+| Saga                |
+| Exora               |
++---------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [venturacarrental]> select distinct Model as 'Model Jenama Proton' from kereta where Jenama = 'Proton';
++---------------------+
+| Model Jenama Proton |
++---------------------+
+| Exora               |
+| Saga                |
++---------------------+
+2 rows in set (0.000 sec)
+
+MariaDB [venturacarrental]> select NoPendaftaran, Hari, Jumlah from tempahan
+    -> order by Jumlah ASC;
++---------------+------+--------+
+| NoPendaftaran | Hari | Jumlah |
++---------------+------+--------+
+| JSE6869       |    1 |    150 |
+| BMX6200       |    1 |    200 |
+| JPQ7979       |    3 |    240 |
+| JPQ7979       |    5 |    400 |
+| VAP8048       |    2 |    460 |
+| WA7698H       |    2 |    600 |
++---------------+------+--------+
+6 rows in set (0.000 sec)
+
+MariaDB [venturacarrental]> select SUM(Jumlah) as 'JumlahKeseluruhan' from tempahan;
++-------------------+
+| JumlahKeseluruhan |
++-------------------+
+|              2050 |
++-------------------+
+1 row in set (0.002 sec)
+
+MariaDB [venturacarrental]> select tempahan.NoPendaftaran, kereta.Model, kereta.Harga
+    -> from tempahan
+    -> left join kereta
+    -> on tempahan.NoPendaftaran = kereta.NoPendaftaran;
++---------------+---------+-------+
+| NoPendaftaran | Model   | Harga |
++---------------+---------+-------+
+| BMX6200       | Elantra |   200 |
+| JPQ7979       | Viva    |    80 |
+| JPQ7979       | Viva    |    80 |
+| JSE6869       | Saga    |   150 |
+| VAP8048       | City    |   230 |
+| WA7698H       | Exora   |   300 |
++---------------+---------+-------+
+6 rows in set (0.001 sec)
+
+MariaDB [venturacarrental]> truncate tempahan;
+Query OK, 0 rows affected (0.036 sec)
+
+MariaDB [venturacarrental]> drop table tempahan;
+Query OK, 0 rows affected (0.010 sec)
+
+MariaDB [venturacarrental]> drop table kereta;
+Query OK, 0 rows affected (0.009 sec)
+
+MariaDB [venturacarrental]> drop database venturacarrental;
+Query OK, 1 row affected (0.013 sec)

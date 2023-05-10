@@ -1,0 +1,313 @@
+MariaDB [(none)]> create database SistemPenyewaanVideo;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]> use SistemPenyewaanVideo;
+Database changed
+
+MariaDB [SistemPenyewaanVideo]> create table pelanggan (
+    -> NoPelanggan varchar(10) primary key,
+    -> NamaPelanggan varchar(100) not null,
+    -> NoKP varchar(50) not null,
+    -> Alamat varchar(100) not null,
+    -> NoTel varchar(50) not null);
+Query OK, 0 rows affected (0.028 sec)
+
+MariaDB [SistemPenyewaanVideo]> desc pelanggan;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| NoPelanggan   | varchar(10)  | NO   | PRI | NULL    |       |
+| NamaPelanggan | varchar(100) | NO   |     | NULL    |       |
+| NoKP          | varchar(50)  | NO   |     | NULL    |       |
+| Alamat        | varchar(100) | NO   |     | NULL    |       |
+| NoTel         | varchar(50)  | NO   |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+5 rows in set (0.013 sec)
+
+MariaDB [SistemPenyewaanVideo]> create table penyewaan (
+    -> NoPenyewaan varchar(10) primary key,
+    -> NoPelanggan varchar(10) not null,
+    -> NoVideo varchar(10) not null,
+    -> TarikhSewa date not null,
+    -> BilVideo int not null,
+    -> JumlahBayaran float(5,2) not null);
+Query OK, 0 rows affected (0.037 sec)
+
+MariaDB [SistemPenyewaanVideo]> desc penyewaan;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| NoPenyewaan   | varchar(10) | NO   | PRI | NULL    |       |
+| NoPelanggan   | varchar(10) | NO   |     | NULL    |       |
+| NoVideo       | varchar(10) | NO   |     | NULL    |       |
+| TarikhSewa    | date        | NO   |     | NULL    |       |
+| BilVideo      | int(11)     | NO   |     | NULL    |       |
+| JumlahBayaran | float(5,2)  | NO   |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+6 rows in set (0.013 sec)
+
+MariaDB [SistemPenyewaanVideo]> create table video (
+    -> NoVideo varchar(10) primary key,
+    -> NoPelanggan varchar(10) not null,
+    -> Tajuk varchar(100) not null,
+    -> KadarSewa float(5,2) not null,
+    -> TarikhKeluaran date not null);
+Query OK, 0 rows affected (0.020 sec)
+
+MariaDB [SistemPenyewaanVideo]> desc video;
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| NoVideo        | varchar(10)  | NO   | PRI | NULL    |       |
+| NoPelanggan    | varchar(10)  | NO   |     | NULL    |       |
+| Tajuk          | varchar(100) | NO   |     | NULL    |       |
+| KadarSewa      | float(5,2)   | NO   |     | NULL    |       |
+| TarikhKeluaran | date         | NO   |     | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
+5 rows in set (0.015 sec)
+
+MariaDB [SistemPenyewaanVideo]> insert into pelanggan values
+    -> ('001','Hanis Izzati Binti Hazmirul Azmi','700210-03-6140','Balakong','03-44437901'),
+    -> ('002','Syamsul Azri Bin Muhammad Amin','800319-14-5562','Kajang','03-82330312'),
+    -> ('003','Abdul Razi bin Abdul Muhaimin','630314-01-4442','Seri Kembangan','03-84229013'),
+    -> ('004','Mashitah Aliya binti Azril','901221-10-6234','Putrajaya','03-88813445'),
+    -> ('005','Munzir Al Hakem Bin Azhari','800521-14-6032','Bangi','03-83218803'),
+    -> ('006','Nadia Nabila Binti Mohammad Hakimi','901112-14-5046','Kajang','03-88562314');
+Query OK, 6 rows affected (0.005 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+MariaDB [SistemPenyewaanVideo]> select * from pelanggan;
++-------------+------------------------------------+----------------+----------------+-------------+
+| NoPelanggan | NamaPelanggan                      | NoKP           | Alamat         | NoTel       |
++-------------+------------------------------------+----------------+----------------+-------------+
+| 001         | Hanis Izzati Binti Hazmirul Azmi   | 700210-03-6140 | Balakong       | 03-44437901 |
+| 002         | Syamsul Azri Bin Muhammad Amin     | 800319-14-5562 | Kajang         | 03-82330312 |
+| 003         | Abdul Razi bin Abdul Muhaimin      | 630314-01-4442 | Seri Kembangan | 03-84229013 |
+| 004         | Mashitah Aliya binti Azril         | 901221-10-6234 | Putrajaya      | 03-88813445 |
+| 005         | Munzir Al Hakem Bin Azhari         | 800521-14-6032 | Bangi          | 03-83218803 |
+| 006         | Nadia Nabila Binti Mohammad Hakimi | 901112-14-5046 | Kajang         | 03-88562314 |
++-------------+------------------------------------+----------------+----------------+-------------+
+6 rows in set (0.003 sec)
+
+MariaDB [SistemPenyewaanVideo]> insert into penyewaan values
+    -> ('011','004','021','2017-01-28','2','8.00'),
+    -> ('012','003','022','2018-02-14','2','12.00'),
+    -> ('013','001','024','2019-03-16','1','7.00'),
+    -> ('014','001','023','2019-02-10','1','5.00'),
+    -> ('015','006','025','2018-12-21','1','7.00');
+Query OK, 5 rows affected (0.004 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [SistemPenyewaanVideo]> select * from penyewaan;
++-------------+-------------+---------+------------+----------+---------------+
+| NoPenyewaan | NoPelanggan | NoVideo | TarikhSewa | BilVideo | JumlahBayaran |
++-------------+-------------+---------+------------+----------+---------------+
+| 011         | 004         | 021     | 2017-01-28 |        2 |          8.00 |
+| 012         | 003         | 022     | 2018-02-14 |        2 |         12.00 |
+| 013         | 001         | 024     | 2019-03-16 |        1 |          7.00 |
+| 014         | 001         | 023     | 2019-02-10 |        1 |          5.00 |
+| 015         | 006         | 025     | 2018-12-21 |        1 |          7.00 |
++-------------+-------------+---------+------------+----------+---------------+
+5 rows in set (0.000 sec)
+
+MariaDB [SistemPenyewaanVideo]> insert into video values
+    -> ('021','004','Aladdin','4.00','2005-01-01'),
+    -> ('022','003','Conjuring','6.00','2007-02-15'),
+    -> ('023','001','Cinderella','5.00','2005-03-21'),
+    -> ('024','001','Star Wars','7.00','2017-05-12'),
+    -> ('025','006','Transformers','7.00','2018-12-31');
+Query OK, 5 rows affected (0.003 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [SistemPenyewaanVideo]> select * from video;
++---------+-------------+--------------+-----------+----------------+
+| NoVideo | NoPelanggan | Tajuk        | KadarSewa | TarikhKeluaran |
++---------+-------------+--------------+-----------+----------------+
+| 021     | 004         | Aladdin      |      4.00 | 2005-01-01     |
+| 022     | 003         | Conjuring    |      6.00 | 2007-02-15     |
+| 023     | 001         | Cinderella   |      5.00 | 2005-03-21     |
+| 024     | 001         | Star Wars    |      7.00 | 2017-05-12     |
+| 025     | 006         | Transformers |      7.00 | 2018-12-31     |
++---------+-------------+--------------+-----------+----------------+
+5 rows in set (0.000 sec)
+
+MariaDB [SistemPenyewaanVideo]> start transaction;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [SistemPenyewaanVideo]> savepoint A;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [SistemPenyewaanVideo]> delete from pelanggan where Alamat = 'Kajang';
+Query OK, 2 rows affected (0.005 sec)
+
+MariaDB [SistemPenyewaanVideo]> select * from pelanggan;
++-------------+----------------------------------+----------------+----------------+-------------+
+| NoPelanggan | NamaPelanggan                    | NoKP           | Alamat
+| NoTel       |
++-------------+----------------------------------+----------------+----------------+-------------+
+| 001         | Hanis Izzati Binti Hazmirul Azmi | 700210-03-6140 | Balakong       | 03-44437901 |
+| 003         | Abdul Razi bin Abdul Muhaimin    | 630314-01-4442 | Seri Kembangan | 03-84229013 |
+| 004         | Mashitah Aliya binti Azril       | 901221-10-6234 | Putrajaya      | 03-88813445 |
+| 005         | Munzir Al Hakem Bin Azhari       | 800521-14-6032 | Bangi
+| 03-83218803 |
++-------------+----------------------------------+----------------+----------------+-------------+
+4 rows in set (0.000 sec)
+
+MariaDB [SistemPenyewaanVideo]> rollback to A;
+Query OK, 0 rows affected (0.003 sec)
+
+MariaDB [SistemPenyewaanVideo]> select * from pelanggan;
++-------------+------------------------------------+----------------+----------------+-------------+
+| NoPelanggan | NamaPelanggan                      | NoKP           | Alamat         | NoTel       |
++-------------+------------------------------------+----------------+----------------+-------------+
+| 001         | Hanis Izzati Binti Hazmirul Azmi   | 700210-03-6140 | Balakong       | 03-44437901 |
+| 002         | Syamsul Azri Bin Muhammad Amin     | 800319-14-5562 | Kajang         | 03-82330312 |
+| 003         | Abdul Razi bin Abdul Muhaimin      | 630314-01-4442 | Seri Kembangan | 03-84229013 |
+| 004         | Mashitah Aliya binti Azril         | 901221-10-6234 | Putrajaya      | 03-88813445 |
+| 005         | Munzir Al Hakem Bin Azhari         | 800521-14-6032 | Bangi          | 03-83218803 |
+| 006         | Nadia Nabila Binti Mohammad Hakimi | 901112-14-5046 | Kajang         | 03-88562314 |
++-------------+------------------------------------+----------------+----------------+-------------+
+6 rows in set (0.000 sec)
+
+MariaDB [SistemPenyewaanVideo]> commit;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [SistemPenyewaanVideo]> select Tajuk from video
+    -> where KadarSewa = '7.00';
++--------------+
+| Tajuk        |
++--------------+
+| Star Wars    |
+| Transformers |
++--------------+
+2 rows in set (0.002 sec)
+
+MariaDB [SistemPenyewaanVideo]> update pelanggan set NoTel = '03-51622017'
+    -> where NoPelanggan = '001';
+Query OK, 1 row affected (0.004 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [SistemPenyewaanVideo]> update pelanggan set NamaPelanggan = 'Abdul Razak bin Abdul Muhaimin'
+    -> where NoPelanggan = '003';
+Query OK, 1 row affected (0.004 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [SistemPenyewaanVideo]> select * from pelanggan;
++-------------+------------------------------------+----------------+----------------+-------------+
+| NoPelanggan | NamaPelanggan                      | NoKP           | Alamat         | NoTel       |
++-------------+------------------------------------+----------------+----------------+-------------+
+| 001         | Hanis Izzati Binti Hazmirul Azmi   | 700210-03-6140 | Balakong       | 03-51622017 |
+| 002         | Syamsul Azri Bin Muhammad Amin     | 800319-14-5562 | Kajang         | 03-82330312 |
+| 003         | Abdul Razak bin Abdul Muhaimin     | 630314-01-4442 | Seri Kembangan | 03-84229013 |
+| 004         | Mashitah Aliya binti Azril         | 901221-10-6234 | Putrajaya      | 03-88813445 |
+| 005         | Munzir Al Hakem Bin Azhari         | 800521-14-6032 | Bangi          | 03-83218803 |
+| 006         | Nadia Nabila Binti Mohammad Hakimi | 901112-14-5046 | Kajang         | 03-88562314 |
++-------------+------------------------------------+----------------+----------------+-------------+
+6 rows in set (0.000 sec)
+
+MariaDB [SistemPenyewaanVideo]> alter table pelanggan drop column NoKP;
+Query OK, 0 rows affected (0.013 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [SistemPenyewaanVideo]> desc pelanggan;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| NoPelanggan   | varchar(10)  | NO   | PRI | NULL    |       |
+| NamaPelanggan | varchar(100) | NO   |     | NULL    |       |
+| Alamat        | varchar(100) | NO   |     | NULL    |       |
+| NoTel         | varchar(50)  | NO   |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+4 rows in set (0.013 sec)
+
+MariaDB [SistemPenyewaanVideo]> select * from pelanggan;
++-------------+------------------------------------+----------------+-------------+
+| NoPelanggan | NamaPelanggan                      | Alamat         | NoTel       |
++-------------+------------------------------------+----------------+-------------+
+| 001         | Hanis Izzati Binti Hazmirul Azmi   | Balakong       | 03-51622017 |
+| 002         | Syamsul Azri Bin Muhammad Amin     | Kajang         | 03-82330312 |
+| 003         | Abdul Razak bin Abdul Muhaimin     | Seri Kembangan | 03-84229013 |
+| 004         | Mashitah Aliya binti Azril         | Putrajaya      | 03-88813445 |
+| 005         | Munzir Al Hakem Bin Azhari         | Bangi          | 03-83218803 |
+| 006         | Nadia Nabila Binti Mohammad Hakimi | Kajang         | 03-88562314 |
++-------------+------------------------------------+----------------+-------------+
+6 rows in set (0.000 sec)
+
+MariaDB [SistemPenyewaanVideo]> select Tajuk, TarikhKeluaran from video;
++--------------+----------------+
+| Tajuk        | TarikhKeluaran |
++--------------+----------------+
+| Aladdin      | 2005-01-01     |
+| Conjuring    | 2007-02-15     |
+| Cinderella   | 2005-03-21     |
+| Star Wars    | 2017-05-12     |
+| Transformers | 2018-12-31     |
++--------------+----------------+
+5 rows in set (0.000 sec)
+
+MariaDB [SistemPenyewaanVideo]> select pelanggan.NamaPelanggan, penyewaan.TarikhSewa
+    -> from pelanggan
+    -> inner join penyewaan
+    -> on pelanggan.NoPelanggan = penyewaan.NoPelanggan
+    -> order by penyewaan.TarikhSewa DESC;
++------------------------------------+------------+
+| NamaPelanggan                      | TarikhSewa |
++------------------------------------+------------+
+| Hanis Izzati Binti Hazmirul Azmi   | 2019-03-16 |
+| Hanis Izzati Binti Hazmirul Azmi   | 2019-02-10 |
+| Nadia Nabila Binti Mohammad Hakimi | 2018-12-21 |
+| Abdul Razak bin Abdul Muhaimin     | 2018-02-14 |
+| Mashitah Aliya binti Azril         | 2017-01-28 |
++------------------------------------+------------+
+5 rows in set (0.002 sec)
+
+MariaDB [SistemPenyewaanVideo]> select Tajuk from video
+    -> where KadarSewa = (select MIN(KadarSewa) from video);
++---------+
+| Tajuk   |
++---------+
+| Aladdin |
++---------+
+1 row in set (0.001 sec)
+
+MariaDB [SistemPenyewaanVideo]> select pelanggan.NamaPelanggan, pelanggan.NoTel,
+    -> penyewaan.TarikhSewa, penyewaan.JumlahBayaran, video.tajuk
+    -> from penyewaan
+    -> inner join pelanggan
+    -> on penyewaan.NoPelanggan = pelanggan.NoPelanggan
+    -> inner join video
+    -> on penyewaan.NoVideo = video.NoVideo;
++------------------------------------+-------------+------------+---------------+--------------+
+| NamaPelanggan                      | NoTel       | TarikhSewa | JumlahBayaran | tajuk        |
++------------------------------------+-------------+------------+---------------+--------------+
+| Mashitah Aliya binti Azril         | 03-88813445 | 2017-01-28 |          8.00 | Aladdin      |
+| Abdul Razak bin Abdul Muhaimin     | 03-84229013 | 2018-02-14 |         12.00 | Conjuring    |
+| Hanis Izzati Binti Hazmirul Azmi   | 03-51622017 | 2019-03-16 |          7.00 | Star Wars    |
+| Hanis Izzati Binti Hazmirul Azmi   | 03-51622017 | 2019-02-10 |          5.00 | Cinderella   |
+| Nadia Nabila Binti Mohammad Hakimi | 03-88562314 | 2018-12-21 |          7.00 | Transformers |
++------------------------------------+-------------+------------+---------------+--------------+
+5 rows in set (0.000 sec)
+
+MariaDB [SistemPenyewaanVideo]> select SUM(JumlahBayaran) as 'Jumlah Bayaran Hanis Izzati' from penyewaan
+    -> where NoPelanggan = '001';
++-----------------------------+
+| Jumlah Bayaran Hanis Izzati |
++-----------------------------+
+|                       12.00 |
++-----------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [SistemPenyewaanVideo]> truncate penyewaan;
+Query OK, 0 rows affected (0.025 sec)
+
+MariaDB [SistemPenyewaanVideo]> drop table penyewaan;
+Query OK, 0 rows affected (0.006 sec)
+
+MariaDB [SistemPenyewaanVideo]> show tables;
++--------------------------------+
+| Tables_in_sistempenyewaanvideo |
++--------------------------------+
+| pelanggan                      |
+| video                          |
++--------------------------------+
+2 rows in set (0.000 sec)
