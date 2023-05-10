@@ -1,0 +1,374 @@
+MariaDB [(none)]> create database health_beauty;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]> use health_beauty;
+Database changed
+MariaDB [health_beauty]> create table item (
+    -> no_item varchar(10) primary key,
+    -> item_name varchar(50),
+    -> item_size int,
+    -> item_brand int,
+    -> item_price float(6,2));
+Query OK, 0 rows affected (0.046 sec)
+
+MariaDB [health_beauty]> desc item;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| no_item    | varchar(10) | NO   | PRI | NULL    |       |
+| item_name  | varchar(50) | YES  |     | NULL    |       |
+| item_size  | int(11)     | YES  |     | NULL    |       |
+| item_brand | int(11)     | YES  |     | NULL    |       |
+| item_price | float(6,2)  | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.018 sec)
+
+MariaDB [health_beauty]> create table brand (
+    -> id_brand int auto_increment primary key,
+    -> brand_name varchar(100));
+Query OK, 0 rows affected (0.027 sec)
+
+MariaDB [health_beauty]> desc brand;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| id_brand   | int(11)      | NO   | PRI | NULL    | auto_increment |
+| brand_name | varchar(100) | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+2 rows in set (0.016 sec)
+
+MariaDB [health_beauty]> create table purchase_desc (
+    -> no_purchase varchar(10) primary key,
+    -> date_purchase date,
+    -> cashier varchar(100));
+Query OK, 0 rows affected (0.045 sec)
+
+MariaDB [health_beauty]> desc purchase_desc;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| no_purchase   | varchar(10)  | NO   | PRI | NULL    |       |
+| date_purchase | date         | YES  |     | NULL    |       |
+| cashier       | varchar(100) | YES  |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+3 rows in set (0.016 sec)
+
+MariaDB [health_beauty]> create table purchase_item (
+    -> id_purchase int auto_increment primary key,
+    -> no_purchase varchar(10),
+    -> no_item varchar(10),
+    -> quantity int);
+Query OK, 0 rows affected (0.028 sec)
+
+MariaDB [health_beauty]> desc purchase_item;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| id_purchase | int(11)     | NO   | PRI | NULL    | auto_increment |
+| no_purchase | varchar(10) | YES  |     | NULL    |                |
+| no_item     | varchar(10) | YES  |     | NULL    |                |
+| quantity    | int(11)     | YES  |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.013 sec)
+
+MariaDB [health_beauty]> insert into item values
+    -> ('V781','Zinc B-Plus',30,1,'54.00'),
+    -> ('V782','C Burst 1000mg',30,2,'32.00'),
+    -> ('V783','Magnesium',50,3,'46.00'),
+    -> ('V784','Calcium+d3',120,3,'43.30'),
+    -> ('V785','Executive B Complex',30,4,'45.00'),
+    -> ('V786','Multivitamins + Minerals',100,4,'74.00'),
+    -> ('V787','Buffered C',100,3,'159.00');
+Query OK, 7 rows affected (0.061 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+MariaDB [health_beauty]> select * from item;
++---------+--------------------------+-----------+------------+------------+
+| no_item | item_name                | item_size | item_brand | item_price |
++---------+--------------------------+-----------+------------+------------+
+| V781    | Zinc B-Plus              |        30 |          1 |      54.00 |
+| V782    | C Burst 1000mg           |        30 |          2 |      32.00 |
+| V783    | Magnesium                |        50 |          3 |      46.00 |
+| V784    | Calcium+d3               |       120 |          3 |      43.30 |
+| V785    | Executive B Complex      |        30 |          4 |      45.00 |
+| V786    | Multivitamins + Minerals |       100 |          4 |      74.00 |
+| V787    | Buffered C               |       100 |          3 |     159.00 |
++---------+--------------------------+-----------+------------+------------+
+7 rows in set (0.003 sec)
+
+MariaDB [health_beauty]> insert into purchase_desc values
+    -> ('0865','2023-02-12','Anna'),
+    -> ('0545','2023-02-12','Qaseh'),
+    -> ('1545','2023-02-14','Lim'),
+    -> ('0145','2023-02-15','Intan'),
+    -> ('0190','2023-02-15','Anna');
+Query OK, 5 rows affected (0.003 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [health_beauty]> select * from purchase_desc;
++-------------+---------------+---------+
+| no_purchase | date_purchase | cashier |
++-------------+---------------+---------+
+| 0145        | 2023-02-15    | Intan   |
+| 0190        | 2023-02-15    | Anna    |
+| 0545        | 2023-02-12    | Qaseh   |
+| 0865        | 2023-02-12    | Anna    |
+| 1545        | 2023-02-14    | Lim     |
++-------------+---------------+---------+
+5 rows in set (0.000 sec)
+
+MariaDB [health_beauty]> insert into brand (brand_name) values
+    -> ('Abbot'),
+    -> ('Live well'),
+    -> ('Blackmores'),
+    -> ('Bio-Life'),
+    -> ('Blogland'),
+    -> ('Forlax'),
+    -> ('GKB');
+Query OK, 7 rows affected (0.003 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+MariaDB [health_beauty]> select * from brand;
++----------+------------+
+| id_brand | brand_name |
++----------+------------+
+|        1 | Abbot      |
+|        2 | Live well  |
+|        3 | Blackmores |
+|        4 | Bio-Life   |
+|        5 | Blogland   |
+|        6 | Forlax     |
+|        7 | GKB        |
++----------+------------+
+7 rows in set (0.000 sec)
+
+MariaDB [health_beauty]> insert into purchase_item (no_purchase, no_item, quantity) values
+    -> ('0865','V784','1'),
+    -> ('0865','V787','1'),
+    -> ('1545','V783','2'),
+    -> ('0545','V781','3'),
+    -> ('0545','V787','1'),
+    -> ('0145','V782','1'),
+    -> ('0190','V781','1');
+Query OK, 7 rows affected (0.005 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+MariaDB [health_beauty]> select * from purchase_item;
++-------------+-------------+---------+----------+
+| id_purchase | no_purchase | no_item | quantity |
++-------------+-------------+---------+----------+
+|           1 | 0865        | V784    |        1 |
+|           2 | 0865        | V787    |        1 |
+|           3 | 1545        | V783    |        2 |
+|           4 | 0545        | V781    |        3 |
+|           5 | 0545        | V787    |        1 |
+|           6 | 0145        | V782    |        1 |
+|           7 | 0190        | V781    |        1 |
++-------------+-------------+---------+----------+
+7 rows in set (0.000 sec)
+
+MariaDB [health_beauty]> update purchase_desc set cashier = 'Halimah'
+    -> where no_purchase = 1545;
+Query OK, 1 row affected (0.007 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [health_beauty]> select * from purchase_desc;
++-------------+---------------+---------+
+| no_purchase | date_purchase | cashier |
++-------------+---------------+---------+
+| 0145        | 2023-02-15    | Intan   |
+| 0190        | 2023-02-15    | Anna    |
+| 0545        | 2023-02-12    | Qaseh   |
+| 0865        | 2023-02-12    | Anna    |
+| 1545        | 2023-02-14    | Halimah |
++-------------+---------------+---------+
+5 rows in set (0.000 sec)
+
+MariaDB [health_beauty]> start transaction;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [health_beauty]> select * from brand;
++----------+------------+
+| id_brand | brand_name |
++----------+------------+
+|        1 | Abbot      |
+|        2 | Live well  |
+|        3 | Blackmores |
+|        4 | Bio-Life   |
+|        5 | Blogland   |
+|        6 | Forlax     |
+|        7 | GKB        |
++----------+------------+
+7 rows in set (0.000 sec)
+
+MariaDB [health_beauty]> savepoint A;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [health_beauty]> delete from brand where id_brand = 7;
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [health_beauty]> select * from brand;
++----------+------------+
+| id_brand | brand_name |
++----------+------------+
+|        1 | Abbot      |
+|        2 | Live well  |
+|        3 | Blackmores |
+|        4 | Bio-Life   |
+|        5 | Blogland   |
+|        6 | Forlax     |
++----------+------------+
+6 rows in set (0.000 sec)
+
+MariaDB [health_beauty]> savepoint B;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [health_beauty]> rollback to A;
+Query OK, 0 rows affected (0.002 sec)
+
+MariaDB [health_beauty]> select * from brand;
++----------+------------+
+| id_brand | brand_name |
++----------+------------+
+|        1 | Abbot      |
+|        2 | Live well  |
+|        3 | Blackmores |
+|        4 | Bio-Life   |
+|        5 | Blogland   |
+|        6 | Forlax     |
+|        7 | GKB        |
++----------+------------+
+7 rows in set (0.000 sec)
+
+MariaDB [health_beauty]> commit;
+Query OK, 0 rows affected (0.003 sec)
+
+MariaDB [health_beauty]> select no_item, item_name as 'BRAND : BLACKMORES', item_price
+    -> from item where item_brand = 3;
++---------+--------------------+------------+
+| no_item | BRAND : BLACKMORES | item_price |
++---------+--------------------+------------+
+| V783    | Magnesium          |      46.00 |
+| V784    | Calcium+d3         |      43.30 |
+| V787    | Buffered C         |     159.00 |
++---------+--------------------+------------+
+3 rows in set (0.002 sec)
+
+MariaDB [health_beauty]> select item.item_name, brand.brand_name, item.item_price
+    -> from item
+    -> inner join brand
+    -> on item.item_brand = brand.id_brand
+    -> where item_name like 'M%';
++--------------------------+------------+------------+
+| item_name                | brand_name | item_price |
++--------------------------+------------+------------+
+| Magnesium                | Blackmores |      46.00 |
+| Multivitamins + Minerals | Bio-Life   |      74.00 |
++--------------------------+------------+------------+
+2 rows in set (0.001 sec)
+
+MariaDB [health_beauty]> select SUM(item_price) as 'TOTAL PRICE OF BIO-LIFE BRAND ITEM'
+    -> from item where item_brand = 4;
++------------------------------------+
+| TOTAL PRICE OF BIO-LIFE BRAND ITEM |
++------------------------------------+
+|                             119.00 |
++------------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [health_beauty]> select item.item_name, (item.item_price * purchase_item.quantity)
+    -> as 'TOTAL PAYMENT FOR NO PURCHASE : 1545'
+    -> from item
+    -> inner join purchase_item
+    -> on item.no_item = purchase_item.no_item
+    -> where no_purchase = 1545;
++-----------+--------------------------------------+
+| item_name | TOTAL PAYMENT FOR NO PURCHASE : 1545 |
++-----------+--------------------------------------+
+| Magnesium |                                92.00 |
++-----------+--------------------------------------+
+1 row in set (0.003 sec)
+
+MariaDB [health_beauty]> select item.item_name as 'NO PURCHASE 0545',
+    -> item.item_price as 'PRICE PER UNIT',
+    -> purchase_item.quantity as 'QUANTITY',
+    -> (item.item_price * purchase_item.quantity) as 'TOTAL'
+    -> from item
+    -> inner join purchase_item
+    -> on item.no_item = purchase_item.no_item
+    -> where no_purchase = 0545;
++------------------+----------------+----------+--------+
+| NO PURCHASE 0545 | PRICE PER UNIT | QUANTITY | TOTAL  |
++------------------+----------------+----------+--------+
+| Zinc B-Plus      |          54.00 |        3 | 162.00 |
+| Buffered C       |         159.00 |        1 | 159.00 |
++------------------+----------------+----------+--------+
+2 rows in set (0.001 sec)
+
+MariaDB [health_beauty]> select no_purchase as 'TRANSACTION BEFORE 15 Feb 2023',
+    -> date_purchase, cashier
+    -> from purchase_desc
+    -> where date_purchase < '2023-02-15';
++--------------------------------+---------------+---------+
+| TRANSACTION BEFORE 15 Feb 2023 | date_purchase | cashier |
++--------------------------------+---------------+---------+
+| 0545                           | 2023-02-12    | Qaseh   |
+| 0865                           | 2023-02-12    | Anna    |
+| 1545                           | 2023-02-14    | Halimah |
++--------------------------------+---------------+---------+
+3 rows in set (0.000 sec)
+
+MariaDB [health_beauty]> select no_purchase as 'TRANSACTION AFTER 12 Feb 2023',
+    -> date_purchase, cashier
+    -> from purchase_desc
+    -> where date_purchase > '2023-02-12';
++-------------------------------+---------------+---------+
+| TRANSACTION AFTER 12 Feb 2023 | date_purchase | cashier |
++-------------------------------+---------------+---------+
+| 0145                          | 2023-02-15    | Intan   |
+| 0190                          | 2023-02-15    | Anna    |
+| 1545                          | 2023-02-14    | Halimah |
++-------------------------------+---------------+---------+
+3 rows in set (0.001 sec)
+
+MariaDB [health_beauty]> select item.item_name, brand.brand_name
+    -> from item
+    -> right join brand
+    -> on item.item_brand = brand.id_brand;
++--------------------------+------------+
+| item_name                | brand_name |
++--------------------------+------------+
+| Zinc B-Plus              | Abbot      |
+| C Burst 1000mg           | Live well  |
+| Magnesium                | Blackmores |
+| Calcium+d3               | Blackmores |
+| Executive B Complex      | Bio-Life   |
+| Multivitamins + Minerals | Bio-Life   |
+| Buffered C               | Blackmores |
+| NULL                     | Blogland   |
+| NULL                     | Forlax     |
+| NULL                     | GKB        |
++--------------------------+------------+
+10 rows in set (0.000 sec)
+
+MariaDB [health_beauty]> select COUNT(distinct cashier) as 'TOTAL OF CASHIER'
+    -> from purchase_desc;
++------------------+
+| TOTAL OF CASHIER |
++------------------+
+|                4 |
++------------------+
+1 row in set (0.000 sec)
+
+MariaDB [health_beauty]> select cashier, COUNT(no_purchase) as 'TOTAL OF TRANSACTION'
+    -> from purchase_desc
+    -> group by cashier;
++---------+----------------------+
+| cashier | TOTAL OF TRANSACTION |
++---------+----------------------+
+| Anna    |                    2 |
+| Halimah |                    1 |
+| Intan   |                    1 |
+| Qaseh   |                    1 |
++---------+----------------------+
+4 rows in set (0.001 sec)
